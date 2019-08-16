@@ -1,0 +1,4 @@
+[
+  {"model": "equip_manage_plat.equipment", "pk": 1, "fields": {"code": "19031", "IMEI": "ASDSFGSJHGSLDHF", "stage": "DVE", "owner": "WB", "borrower": "nn", "borrow_date": "2019-08-07T13:19:00Z", "remark": ""}},
+  {"model": "equip_manage_plat.equipment", "pk": 2, "fields": {"code": "ecw3a", "IMEI": "SKASHFHEBFHSDF", "stage": null, "owner": "WB", "borrower": "sm", "borrow_date": "2019-08-07T13:19:00Z", "remark": ""}}
+]

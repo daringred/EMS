@@ -1,0 +1,113 @@
+{% extends "equip_manage_plat/base.html" %}
+
+{% block main %}
+{#    <article class="post post-1">#}
+{#        <header class="entry-header">#}
+{#            <h1 class="entry-title">#}
+{#            </h1>#}
+{#        </header>#}
+    <style type="text/css">
+        {#页码跳转的显示样式#}
+        #page_goto span{
+            padding: 6px 4px;
+        }
+        #page_goto input {
+            border: none;
+            padding: 0;
+            width: 2em;
+            text-align: center;
+        }
+    </style>
+        <div class="entry-content clearfix">
+            <table class="table-main">
+                <caption class="t-title">设备借用信息表</caption>
+                <thead>
+                    <tr id="t-head">
+                        <th>代号</th>
+                        <th>IMEI</th>
+                        <th>阶段</th>
+                        <th>归属人</th>
+                        <th>借用日期</th>
+                        <th>借用人</th>
+                        <th>借用备注</th>
+                    </tr>
+                </thead>
+            <tbody id="t-body"></tbody>
+                {% for equip in equip_list %}
+                    <tr>
+                        <td>{{ equip.code }}</td>
+                        <td>{{ equip.IMEI }}</td>
+                        <td>{{ equip.stage }}</td>
+                        <td>{{ equip.owner }}</td>
+                        <td>{{ equip.borrower }}</td>
+                        <td>{{ equip.borrow_date }}</td>
+                        <td>{{ equip.remark }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div>
+                <span class="page_footer_tip"></span>
+                <ul class="pagination">
+                    <li>
+                        <a href="?imei={{ imei }}&code={{ code }}&owner={{ owner }}&borrower={{ borrower }}&page=
+                            {% if equip_list.has_previous %}
+                                {{ equip_list.previous_page_number }}
+                            {% else %}
+                                {{ equip_list.number }}
+                            {% endif %}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% for page in pages.page_range_ex %}
+                        {% if page == '...' %}
+                            <li><span>...</span></li>
+                        {% else %}
+                            <li><a href="?imei={{ imei }}&code={{ code }}&owner={{ owner }}&borrower={{ borrower }}&page={{page}}">{{page}}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    <li>
+                        <a href="?imei={{ imei }}&code={{ code }}&owner={{ owner }}&borrower={{ borrower }}&page=
+                            {% if equip_list.has_next %}
+                                {{ equip_list.next_page_number }}
+                            {% else %}
+                                {{ equip_list.number }}
+                            {% endif %}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="pagination">
+                    <li id="page_goto">
+                        <span>
+                            <input type="text" value="{{ pages.page_goto }}" />
+                        </span>
+                    </li>
+                    <li><a href="javascript:void(0);" onClick="page_goto();">Go</a></li>
+                </ul>
+                <script type="text/javascript">
+                    {#设置凸显当前页码#}
+                    $(".pagination li a").each(
+                        function()
+                            {
+                                if($(this).text() ==="{{ equip_list.number }}")
+                                {
+                                    $(this).parent().addClass("active");
+                                }
+                            });
+
+                    {#页码跳转处理#}
+                    function page_goto()
+                    {
+                        var page = $("#page_goto input")[0].value;
+                        window.location.href = '?imei={{ imei }}&code={{ code }}&owner={{ owner }}&borrower={{ borrower }}&page=' + page;  //重定向
+                        return false;
+                    }
+                </script>
+            </div>
+        </div>
+{% endblock %}
+
+{% block aside %}
+    <div></div>
+{% endblock %}
